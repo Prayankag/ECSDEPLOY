@@ -5,11 +5,11 @@ provider "aws" {
 }
 
 resource "aws_ecr_repository" "my_repository" {
-  name = var.ecr_repository_name
+  name = var.ecrrepositoryname
 }
 
 resource "aws_ecs_cluster" "my_cluster" {
-  name = var.ecs_cluster_name
+  name = var.ecsclustername
 }
 
 resource "aws_ecs_task_definition" "my_task_definition" {
@@ -22,7 +22,7 @@ resource "aws_ecs_task_definition" "my_task_definition" {
   memory                   = var.memory
 
   container_definitions = jsonencode([{
-    name      = var.ecr_repository_name
+    name      = var.ecrrepositoryname
     image     = "${aws_ecr_repository.my_repository.repository_url}:latest"
     cpu       = var.cpu
     memory    = var.memory
@@ -99,7 +99,7 @@ resource "aws_security_group" "ecs_sg" {
 }
 
 resource "aws_ecs_service" "my_service" {
-  name            = var.ecs_service_name
+  name            = var.ecsservicename
   cluster         = aws_ecs_cluster.my_cluster.id
   task_definition = aws_ecs_task_definition.my_task_definition.arn
   desired_count   = var.desired_task_count

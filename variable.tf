@@ -5,17 +5,17 @@ variable "region" {
   default     = "us-east-1"
 }
 
-variable "ecr_repository_name" {
+variable "ecrrepositoryname" {
   description = "The name of the ECR repository"
   default     = "my-ecr-repo"
 }
 
-variable "ecs_cluster_name" {
+variable "ecsclustername" {
   description = "The ECS cluster name"
   default     = "my-ecs-cluster"
 }
 
-variable "ecs_service_name" {
+variable "ecsservicename" {
   description = "The ECS service name"
   default     = "my-ecs-service"
 }
