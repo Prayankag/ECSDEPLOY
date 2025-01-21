@@ -55,12 +55,11 @@ jobs:
       # Step 4: Build and push the Docker image to AWS ECR
       - name: Build and Push Docker Image
         env:
-          ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: ${{ '${{ github.event.inputs.ecrrepositoryname }}' }}
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
-          docker tag $ECR_REGISTRY/$ECR_REPOSITORY:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+          docker build -t $ECR_REPOSITORY:latest .
+          docker tag $ECR_REPOSITORY:latest $ECR_REPOSITORY:latest
+          docker push $ECR_REPOSITORY:latest
  
       # Step 5: Deploy the image to AWS ECS
       - name: Deploy to ECS
