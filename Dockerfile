@@ -8,7 +8,9 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install the project dependencies
-RUN npm cache clean --force && npm ci
+RUN npm config set registry https://registry.npmjs.org/ \
+    && npm cache clean --force \
+    && npm ci
 
 # Copy the index.html to the container (just like with NGINX)
 COPY index.html /app/index.html
