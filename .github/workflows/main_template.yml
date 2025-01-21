@@ -48,7 +48,7 @@ jobs:
           echo "ECS service name: ${{ '${{ github.event.inputs.ecsservicename }}' }}"
           echo "Infra Provision: ${{ '${{ github.event.inputs.infraprovision }}' }}"
           echo "ECS Deployment: ${{ '${{ github.event.inputs.ecsdeployment }}' }}"
-  check-and-trigger-terraform-else-dotnet:
+  check-and-trigger-terraform-else-ecs:
     runs-on: ubuntu-latest
     needs: display-input-values
     steps:
@@ -97,9 +97,9 @@ jobs:
           fi   
   check-and-trigger-ecsdeploy-only:
     runs-on: ubuntu-latest
-    needs: check-and-trigger-terraform-else-dotnet
+    needs: check-and-trigger-terraform-else-ecs
     steps:
-      - name: Check and Trigger Dotnet Deployment
+      - name: Check and Trigger ecs Deployment
         id: ecs-deploy
         env:
           GIT_PAT: ${{ '${{ secrets.GIT_PAT }}' }}
@@ -107,7 +107,7 @@ jobs:
           ECSAPP: ${{ '${{ github.event.inputs.ecsdeployment }}' }}
         run: |
           if [ "$INFRA" = "true" ] && [ "$ECSAPP" = "true" ]; then                  
-            echo "Triggering dotnet Deployment Workflow using REST API..."
+            echo "Triggering ecs Deployment Workflow using REST API..."
 
             # Trigger the workflow via GitHub API
             curl -X POST \
