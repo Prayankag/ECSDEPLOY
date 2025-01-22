@@ -66,7 +66,6 @@ jobs:
       - name: Deploy to ECS
         uses: aws-actions/amazon-ecs-deploy-task-definition@v1
         with:
-          task-definition: ecs-task-definition.json
           service: ${{ '${{ github.event.inputs.ecsservicename }}' }}
           cluster: ${{ '${{ github.event.inputs.ecsclustername }}' }}
           wait-for-service-stability: true
