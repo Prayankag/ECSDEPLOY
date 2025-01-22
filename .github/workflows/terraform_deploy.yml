@@ -82,11 +82,14 @@ jobs:
   # Job to destroy the EC2 instance
   destroy_instance:
     runs-on: ubuntu-latest
-    needs:
-      - terraform-deployment
     env:
       TF_VERSION: '1.3.5'
     steps:
+      # approval
+      - name: Approval Required
+        run: echo "Awaiting manual approval..."
+        env:
+          WAIT_FOR_APPROVAL: true
       # Checkout the code from the repository
       - name: Checkout Code
         uses: actions/checkout@v3
