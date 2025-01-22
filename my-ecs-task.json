@@ -56,6 +56,5 @@
     "memory": "2048",
     "registeredAt": "2025-01-22T14:33:55.514Z",
     "registeredBy": "arn:aws:iam::148761635088:user/terraformuser",
-    "enableFaultInjection": false,
     "tags": []
 }
