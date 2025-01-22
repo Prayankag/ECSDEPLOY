@@ -57,9 +57,10 @@ jobs:
         env:
           ECR_REPOSITORY: ${{ '${{ github.event.inputs.ecrrepositoryname }}' }}
         run: |
+          aws ecr get-login-password --region ${{ '${{ github.event.inputs.region }}' }} | docker login --username AWS --password-stdin 148761635088.dkr.ecr.${{ '${{ github.event.inputs.region }}' }}.amazonaws.com
           docker build -t $ECR_REPOSITORY:latest .
-          docker tag $ECR_REPOSITORY:latest $ECR_REPOSITORY:latest
-          docker push $ECR_REPOSITORY:latest
+          docker tag backstageecr:latest 148761635088.dkr.ecr.${{ '${{ github.event.inputs.region }}' }}.amazonaws.com/$ECR_REPOSITORY:latest
+          docker push 148761635088.dkr.ecr.${{ '${{ github.event.inputs.region }}' }}.amazonaws.com/$ECR_REPOSITORY:latest
  
       # Step 5: Deploy the image to AWS ECS
       - name: Deploy to ECS
