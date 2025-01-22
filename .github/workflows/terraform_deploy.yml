@@ -127,5 +127,5 @@ jobs:
         
       # Apply the Terraform destroy plan
       - name: Terraform Destroy
-        run: terraform apply -auto-approve tfplan
+        run: terraform destroy -auto-approve tfplan
         working-directory: ./terraform 
