@@ -84,11 +84,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TF_VERSION: '1.3.5'
-    environment: approval-required # This triggers manual approval
     steps:
-      # approval
-      - name: Awaiting Approval
-        run: echo "This step requires manual approval via the environment settings."
       # Checkout the code from the repository
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -122,10 +118,10 @@ jobs:
 
       # Generate the Terraform destroy plan
       - name: Terraform Plan Destroy
-        run: terraform plan -destroy -var "ecrrepositoryname=${{ '${{ github.event.inputs.ecrrepositoryname }}' }}" -var "region=${{ '${{ github.event.inputs.region }}' }}" -var "ecsclustername=${{ '${{ github.event.inputs.ecsclustername }}' }}" -var "ecsservicename=${{ '${{ github.event.inputs.ecsservicename }}' }}" -out=tfplan
+        run: terraform plan -destroy -var-file=terraform.tfvars -var "ecrrepositoryname=${{ '${{ github.event.inputs.ecrrepositoryname }}' }}" -var "region=${{ '${{ github.event.inputs.region }}' }}" -var "ecsclustername=${{ '${{ github.event.inputs.ecsclustername }}' }}" -var "ecsservicename=${{ '${{ github.event.inputs.ecsservicename }}' }}" -out=tfplan
         working-directory: ./terraform
         
       # Apply the Terraform destroy plan
       - name: Terraform Destroy
-        run: terraform apply -auto-approve tfplan
+        run: terraform apply -destroy -auto-approve tfplan
         working-directory: ./terraform 
