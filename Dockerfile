@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the package.json and package-lock.json to install dependencies
 COPY package*.json ./
 
+# Install the project dependencies
+RUN npm install
+
 # Copy the index.html to the container (just like with NGINX)
 COPY index.html /app/index.html
 

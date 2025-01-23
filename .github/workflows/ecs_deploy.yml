@@ -38,7 +38,17 @@ jobs:
           git config --global user.name "prayankag"
         env:
           CI: true
+      
+      # Step 3: Setup Node.js (Installs Node.js and npm)
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # Specify the Node.js version to use (e.g., 16 or latest)
 
+      # Step 4: Install npm Dependencies
+      - name: Install npm Dependencies
+        run: npm install
+      
       # Configure AWS credentials
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -60,13 +70,4 @@ jobs:
           aws ecr get-login-password --region ${{ '${{ github.event.inputs.region }}' }} | docker login --username AWS --password-stdin 148761635088.dkr.ecr.${{ '${{ github.event.inputs.region }}' }}.amazonaws.com
           docker build -t $ECR_REPOSITORY:latest .
           docker tag backstageecr:latest 148761635088.dkr.ecr.${{ '${{ github.event.inputs.region }}' }}.amazonaws.com/$ECR_REPOSITORY:latest
-          docker push 148761635088.dkr.ecr.${{ '${{ github.event.inputs.region }}' }}.amazonaws.com/$ECR_REPOSITORY:latest
- 
-      # Step 5: Deploy the image to AWS ECS
-      - name: Deploy to ECS
-        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
-        with:
-          task-definition: my-ecs-task.json
-          service: ${{ '${{ github.event.inputs.ecsservicename }}' }}
-          cluster: ${{ '${{ github.event.inputs.ecsclustername }}' }}
-          wait-for-service-stability: true
+          docker push 148761635088.dkr.ecr.${{ '${{ github.event.inputs.region }}' }}.amazonaws.com/$ECR_REPOSITORY:latest      
