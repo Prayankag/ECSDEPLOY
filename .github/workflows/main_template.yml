@@ -76,6 +76,7 @@ jobs:
                   "ecsservicename": "${{ '${{ github.event.inputs.ecsservicename }}' }}"
                 } 
               }'
+            sleep 300
           else
             echo "ECSAPP deployment only"
             echo "Triggering ECSAPP Deployment Workflow using REST API..."
@@ -123,4 +124,5 @@ jobs:
                   "ecsservicename": "${{ '${{ github.event.inputs.ecsservicename }}' }}"
                 }
               }'
+            sleep 300
           fi
